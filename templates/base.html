@@ -51,5 +51,12 @@ $(document).ready(function() {
     <!--Footer include here-->
     {% include "includes/footer.html" %}
 
+    <script>
+        $(document).ready(function () {
+          setTimeout(function () {
+            $('#message').fadeOut('slow');
+          }, 4000);
+        });
+    </script>
 </body>
 </html>
