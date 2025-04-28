@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-container {
+            background-color: #ffffff;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px #cccccc;
+        }
+        .email-header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .email-header h2 {
+            color: #333333;
+        }
+        .email-body {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.6;
+        }
+        .email-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #999999;
+        }
+        .order-details {
+            margin-top: 20px;
+            background-color: #f2f2f2;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .order-details p {
+            margin: 5px 0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h2>Thank you for your order, {{ user.first_name }}!</h2>
+        </div>
+
+        <div class="email-body">
+            <p>We have received your order and it is currently being processed.</p>
+
+            <div class="order-details">
+                <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+                <p><strong>Total Amount:</strong> ${{ order.order_total }}</p>
+                <p><strong>Payment Status:</strong> Completed</p>
+            </div>
+
+            <p>If you have any questions, feel free to contact our support team.</p>
+
+            <a href="#" class="btn">Visit Our Store</a>
+        </div>
+
+        <div class="email-footer">
+            &copy; {{ now|date:"Y" }} GreatCart. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
