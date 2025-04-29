@@ -1,0 +1,176 @@
+/* General styles for the orders-section */
+.orders-section .orders-section-card {
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.orders-section .orders-section-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.orders-section .orders-section-card-header {
+    background: linear-gradient(135deg, #00bcd4, #8bc34a);
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.orders-section .orders-section-card-body {
+    padding: 25px;
+    color: #333;
+}
+
+/* Order Information Section */
+.orders-section .orders-section-order-info-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #00bcd4; /* Vibrant cyan */
+}
+
+.orders-section .orders-section-shipping-info-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ff4081; /* Vibrant pink */
+}
+
+.orders-section .orders-section-order-items-title {
+    font-size: 1.3rem;
+    margin-top: 25px;
+    font-weight: bold;
+    color: #8bc34a; /* Green */
+}
+
+/* Table Styles */
+.orders-section .orders-section-table {
+    width: 100%;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+    border-radius: 8px;
+}
+
+.orders-section .orders-section-table-bordered {
+    border: 1px solid #ddd;
+}
+
+.orders-section .orders-section-table-striped tbody tr:nth-child(odd) {
+    background-color: #f1f1f1; /* Light gray for striped rows */
+}
+
+.orders-section .orders-section-table thead {
+    background-color: #00796b; /* Teal background */
+    color: #ffffff;
+}
+
+.orders-section .orders-section-table td, .orders-section .orders-section-table th {
+    padding: 12px;
+    text-align: center;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+}
+
+.orders-section .orders-section-table th {
+    font-weight: bold;
+}
+
+.orders-section .orders-section-table td {
+    color: #555;
+}
+
+/* Badge colors based on order status */
+.orders-section .badge-new {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.orders-section .badge-accepted {
+    background-color: #ff9800;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.orders-section .badge-completed {
+    background-color: #2196f3;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.orders-section .badge-cancelled {
+    background-color: #f44336;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Styling for the totals section */
+.orders-section .orders-section-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #333;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.orders-section .orders-section-total p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.orders-section .orders-section-total p strong {
+    color: #2196f3; /* Blue for strong totals */
+}
+
+/* Hover effects for cards */
+.orders-section .orders-section-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty orders message */
+.orders-section p.no-orders {
+    font-size: 1.5rem;
+    color: #888;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Adjusting table for mobile responsiveness */
+@media (max-width: 767px) {
+    .orders-section .orders-section-table td, .orders-section .orders-section-table th {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .orders-section .orders-section-card-header {
+        font-size: 1rem;
+    }
+
+    .orders-section .orders-section-total {
+        font-size: 1rem;
+    }
+}
+
+/* profile picture style */
+.profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+/* change password page css */

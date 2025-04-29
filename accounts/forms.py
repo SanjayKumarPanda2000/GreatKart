@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account
+from .models import Account, UserProfile
 from django.core.exceptions import ValidationError
 
 class RegistractionForm(forms.ModelForm):
@@ -37,3 +37,15 @@ class RegistractionForm(forms.ModelForm):
         if Account.objects.filter(phone_number=phone_number).exists():
             raise ValidationError("Phone number already exists")
         return phone_number
+    
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields=('first_name','last_name','email','phone_number')
+        
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields=('address','profile_picture','city','state','country')

@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
-from .forms import RegistractionForm
-from .models import Account
+from .forms import RegistractionForm,UserForm,UserProfileForm
+from .models import Account,UserProfile
+from order.models import Order,OrderProduct
+
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -18,6 +20,7 @@ from .token import FiveMinuteTokenGenerator
 from carts.models import Cart,CartItem
 from carts.views import _cart_id
 import requests
+from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 def register(request):
     if request.method=='POST':
@@ -170,7 +173,14 @@ def activate(request,uidb64,token):
 
 @login_required(login_url='login')    
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    order=Order.objects.filter(user=request.user,is_ordered=True)
+    order_count=order.count()
+    user_profile=UserProfile.objects.get(user_id=request.user.id)
+    context={
+        'order_count':order_count,
+        'userprofile':user_profile
+    }
+    return render(request,'accounts/dashboard.html',context)
 
 
 
@@ -236,3 +246,74 @@ def resetpassword(request):
             messages.error(request,'password do not metch')
             return redirect('resetpassword')
     return render(request,'accounts/resetpassword.html')
+
+@login_required(login_url='/login/')
+def my_orders(request):
+    orders=Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
+    
+    # Optional: prefetch order items to avoid N+1 queries
+    
+    
+    for order in orders:
+        order.order_items = OrderProduct.objects.filter(order=order)
+        subtotal = 0
+        for item in order.order_items:
+            item.total_price = item.quantity * item.product_price
+            subtotal += item.total_price
+        
+        order.subtotal = subtotal  # Add subtotal to each order
+    
+    context={
+        'orders':orders,
+    }
+    return render(request,'accounts/my_orders.html',context)
+
+@login_required(login_url='/login/')
+def edit_profile(request):
+    try:
+        user_profile=UserProfile.objects.get(user=request.user)
+        
+    except UserProfile.DoesNotExist:
+        user_profile=None
+    
+    if request.method=='POST':
+        user_form=UserForm(request.POST, instance=request.user)
+        profile_form=UserProfileForm(request.POST,request.FILES, instance=user_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request,"Your profile has been updated")
+            return redirect('edit_profile')
+    
+    context={
+        'userprofile':user_profile
+    }
+    return render(request,'accounts/edit_profile.html', context)
+
+@login_required(login_url='/login/')
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        user = request.user
+
+        if not user.check_password(current_password):
+            messages.error(request, 'Your current password is incorrect.')
+            return redirect('change_password')
+
+        if new_password != confirm_password:
+            messages.error(request, 'New passwords do not match.')
+            return redirect('change_password')
+
+        if len(new_password) < 8:
+            messages.warning(request, 'Password must be at least 8 characters.')
+            return redirect('change_password')
+
+        user.set_password(new_password)
+        user.save()
+        update_session_auth_hash(request, user)  # Keep the user logged in
+        messages.success(request, 'Your password has been successfully updated.')
+        return redirect('dashboard') 
+    return render(request,'accounts/change_password.html')
