@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Product, ReviewRating
+from .models import Product, ReviewRating,ProductGalary
 from category.models import Category
 from carts.models import CartItem,Cart
 from carts.views import _cart_id
@@ -9,19 +9,20 @@ from django.db.models import Q
 from .forms import ReviewForm
 from django.contrib import messages
 from order.models import OrderProduct
+from accounts.models import UserProfile
 # Create your views here.
 def store(request,category_slug=None):
     categories=None
     products=None
     if category_slug != None:
         categories=get_object_or_404(Category,slug=category_slug)
-        products=Product.objects.filter(category=categories).order_by('id')
+        products=Product.objects.filter(category=categories).order_by('-created_date')
         #pagination logic
         paginator=Paginator(products,3)
         page=request.GET.get('page')
         page_products=paginator.get_page(page)
     else:
-        products=Product.objects.all().filter(is_available=True).order_by('id')
+        products=Product.objects.all().filter(is_available=True).order_by('-created_date')
         #pagination logic
         paginator=Paginator(products,3)
         page=request.GET.get('page')
@@ -51,13 +52,18 @@ def product_details(request,category_slug,product_slug):
     else:
         orderproduct=None
     
-    reviews=ReviewRating.objects.filter(product_id=product.id, status=True)    
+    reviews=ReviewRating.objects.filter(product_id=product.id, status=True)  
+    
+    product_gallry=ProductGalary.objects.filter(product_id=product.id)  
+    
     
     context={
         'product':product,
         'in_cart':in_cart,
         'orderproduct':orderproduct,
-        'reviews':reviews
+        'reviews':reviews,
+        'product_galary':product_gallry,
+        
     }
     return render(request,'store/product_details.html',context)
 

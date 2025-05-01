@@ -39,3 +39,39 @@ label:hover ~ input:checked ~ label{
 .review-rating i{
     color: #ffb503 !important;
 }
+
+/*style for product details image*/
+.main-image-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .main-image-container img#mainProductImage {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .thumb-strip {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(47, 46, 46, 0.5);
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .thumb-strip img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+
+  .thumb-strip img:hover {
+    border-color: #fff;
+  }

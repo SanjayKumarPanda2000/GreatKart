@@ -175,7 +175,12 @@ def activate(request,uidb64,token):
 def dashboard(request):
     order=Order.objects.filter(user=request.user,is_ordered=True)
     order_count=order.count()
-    user_profile=UserProfile.objects.get(user_id=request.user.id)
+    print(request.user.id)
+    try:
+        user_profile=UserProfile.objects.get(user_id=request.user.id)
+    except UserProfile.DoesNotExist:
+        user_profile=None
+        
     context={
         'order_count':order_count,
         'userprofile':user_profile
@@ -281,7 +286,10 @@ def edit_profile(request):
         profile_form=UserProfileForm(request.POST,request.FILES, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            profile_form.save()
+            profile = profile_form.save(commit=False)
+            if not user_profile:
+                profile.user = request.user  # 👈 Set the user if new profile
+            profile.save()
             messages.success(request,"Your profile has been updated")
             return redirect('edit_profile')
     

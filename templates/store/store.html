@@ -165,6 +165,13 @@
                   <div class="price-wrap mt-2">
                     <span class="price">{{product.price}}</span>
                   </div>
+                  <span class="review-rating">
+                    <i class="{% if product.averageRating <= 0.5 %}far fa-star{% elif product.averageRating >= 0.5 and product.averageRating < 1 %}fas fa-star-half-alt{% else %}fas fa-star{% endif %}"></i>
+                    <i class="{% if product.averageRating <= 1.5 %}far fa-star{% elif product.averageRating >= 1.5 and product.averageRating < 2 %}fas fa-star-half-alt{% else %}fas fa-star{% endif %}"></i>
+                    <i class="{% if product.averageRating <= 2.5 %}far fa-star{% elif product.averageRating >= 2.5 and product.averageRating < 3 %}fas fa-star-half-alt{% else %}fas fa-star{% endif %}"></i>
+                    <i class="{% if product.averageRating <= 3.5 %}far fa-star{% elif product.averageRating >= 3.5 and product.averageRating < 4 %}fas fa-star-half-alt{% else %}fas fa-star{% endif %}"></i>
+                    <i class="{% if product.averageRating <= 4.5 %}far fa-star{% elif product.averageRating >= 4.5 and product.averageRating < 5 %}fas fa-star-half-alt{% else %}fas fa-star{% endif %}"></i>
+                  </span>
                   <!-- price-wrap.// -->
                 </div>
                 <a href="{{product.get_url}}" class="btn btn-block btn-primary">View Details</a>

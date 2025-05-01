@@ -9,11 +9,19 @@
             <div class="card">
                 <div class="row no-gutters">
                   <aside class="col-md-6">
-                    <article class="gallery-wrap">
-                      <div class="img-big-wrap">
-                        <a href="#"><img src="{{ product.image.url }}" class="img-fluid p-3 rounded border" /></a>
+                    <article class="gallery-wrap text-center">
+                      <div class="main-image-container">
+                        <!-- Main Image -->
+                        <img id="mainProductImage" src="{{ product.image.url }}" class="img-fluid p-3 rounded border" />
+                    
+                        <!-- Overlaid Thumbnails -->
+                        <div class="thumb-strip">
+                          <img src="{{product.image.url}}" onclick="changeMainImage('{{ product.image.url }}')" alt="thumb">
+                          {% for image in product_galary %}
+                          <img src="{{image.image.url}}" onclick="changeMainImage('{{ image.image.url }}')" alt="thumb">
+                          {% endfor %}
+                        </div>
                       </div>
-                      <!-- img-big-wrap.// -->
                     </article>
                     <!-- gallery-wrap .end// -->
                   </aside>
@@ -191,5 +199,9 @@
   <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
+<script>
+  function changeMainImage(imageUrl) {
+    document.getElementById('mainProductImage').src = imageUrl;
+  }
+</script>
 {% endblock %}
